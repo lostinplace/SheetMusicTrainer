@@ -1,0 +1,88 @@
+
+> sr-sm-trainer@0.0.0 lint
+> eslint .
+
+
+D:\code\sr-sm-trainer\src\components\MidiDebugPanel.tsx
+  23:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\code\sr-sm-trainer\src\components\MidiDebugPanel.tsx:23:9
+  21 |     useEffect(() => {
+  22 |         // Initialize offset and volume
+> 23 |         setOffset(midiHandler.getOctaveOffset());
+     |         ^^^^^^^^^ Avoid calling setState() directly within an effect
+  24 |         setVolume(getMasterVolume());
+  25 |         
+  26 |         // Listen to raw events  react-hooks/set-state-in-effect
+
+D:\code\sr-sm-trainer\src\components\SheetMusicDisplay.tsx
+  43:24  warning  The ref value 'containerRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'containerRef.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+D:\code\sr-sm-trainer\src\components\VirtualPiano.tsx
+  23:9  warning  The 'baseWhiteKeys' array makes the dependencies of useCallback Hook (at line 122) change on every render. To fix this, wrap the initialization of 'baseWhiteKeys' in its own useMemo() Hook                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react-hooks/exhaustive-deps
+  40:9  warning  The 'blackKeyMap' object makes the dependencies of useCallback Hook (at line 122) change on every render. To fix this, wrap the initialization of 'blackKeyMap' in its own useMemo() Hook                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react-hooks/exhaustive-deps
+  45:5  error    Error: Cannot access variable before it is declared
+
+`drawPiano` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\code\sr-sm-trainer\src\components\VirtualPiano.tsx:45:5
+  43 |
+  44 |   useEffect(() => {
+> 45 |     drawPiano();
+     |     ^^^^^^^^^ `drawPiano` accessed before it is declared
+  46 |   }, [minRange, maxRange, activeNotes, whiteKeyWidth]);
+  47 |
+  48 |   const isNoteActive = (note: string) => activeNotes.includes(note);
+
+D:\code\sr-sm-trainer\src\components\VirtualPiano.tsx:59:3
+   57 |   }
+   58 |
+>  59 |   const drawPiano = useCallback(() => {
+      |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  60 |     const canvas = canvasRef.current;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  61 |     if (!canvas) return;
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 121 |     }
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |   }, [width, height, totalWhiteKeys, startIndex, baseWhiteKeys, whiteKeyWidth, blackKeyWidth, blackKeyHeight, blackKeyMap, isNoteActive]);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `drawPiano` is declared here
+  123 |
+  124 |   useEffect(() => {
+  125 |     drawPiano();  react-hooks/immutability
+  46:6  warning  React Hook useEffect has a missing dependency: 'drawPiano'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react-hooks/exhaustive-deps
+  48:9  warning  The 'isNoteActive' function makes the dependencies of useCallback Hook (at line 122) change on every render. Move it inside the useCallback callback. Alternatively, wrap the definition of 'isNoteActive' in its own useCallback() Hook                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react-hooks/exhaustive-deps
+
+D:\code\sr-sm-trainer\src\hooks\useTrainer.ts
+  140:10  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\code\sr-sm-trainer\src\hooks\useTrainer.ts:140:10
+  138 |      if (mode !== prevModeRef.current) {
+  139 |          prevModeRef.current = mode;
+> 140 |          nextQuestion();
+      |          ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  141 |      } else if (!questionState && cards.length > 0) {
+  142 |          // Initial load if no question (and cards are ready)
+  143 |          nextQuestion();  react-hooks/set-state-in-effect
+
+D:\code\sr-sm-trainer\src\lib\audio.ts
+  11:64  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\code\sr-sm-trainer\src\lib\midi.ts
+  27:11  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+Γ£û 10 problems (5 errors, 5 warnings)
+
