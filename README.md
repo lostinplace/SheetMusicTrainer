@@ -26,7 +26,7 @@ This project is built with a modern React stack:
 -   **Build Tool**: [Vite](https://vitejs.dev/)
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 -   **Music Rendering**: [OpenSheetMusicDisplay](https://github.com/opensheetmusicdisplay/opensheetmusicdisplay)
--   **Audio**: [soundfont-player](https://github.com/ danigb/soundfont-player)
+-   **Audio**: [soundfont-player](https://github.com/danigb/soundfont-player)
 -   **Spaced Repetition**: [ts-fsrs](https://github.com/open-spaced-repetition/ts-fsrs)
 
 ## Getting Started
