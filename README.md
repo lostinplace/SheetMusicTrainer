@@ -1,4 +1,4 @@
-# Sight Reading / Sight Music Trainer (SR/SM)
+# Sheet Music Trainer (SR/SM)
 
 A web-based trainer for piano sight-reading, focusing on identifying notes and chords on the grand staff. It uses a spaced repetition system (SRS) to optimize your learning efficiency.
 
