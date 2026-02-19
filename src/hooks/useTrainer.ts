@@ -341,10 +341,10 @@ export function useTrainer() {
              else rating = 1; // Again
 
              console.log(`Practice Score: ${score} (Time: ${practiceTimer}, Wrong: ${wrongAttempts}) -> Rating: ${rating}`);
-             handleGrade(rating);
+             const updatedCards = handleGrade(rating);
              
              // Next Question
-             nextQuestion();
+             nextQuestion(updatedCards);
 
        } else {
             // Incorrect
