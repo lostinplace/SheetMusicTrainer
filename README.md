@@ -1,4 +1,4 @@
-# Sight Reading / Sight Music Trainer (SR/SM)
+# Sheet Music Trainer (SR/SM)
 
 A web-based trainer for piano sight-reading, focusing on identifying notes and chords on the grand staff. It uses a spaced repetition system (SRS) to optimize your learning efficiency.
 
@@ -26,7 +26,7 @@ This project is built with a modern React stack:
 -   **Build Tool**: [Vite](https://vitejs.dev/)
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 -   **Music Rendering**: [OpenSheetMusicDisplay](https://github.com/opensheetmusicdisplay/opensheetmusicdisplay)
--   **Audio**: [soundfont-player](https://github.com/ danigb/soundfont-player)
+-   **Audio**: [soundfont-player](https://github.com/danigb/soundfont-player)
 -   **Spaced Repetition**: [ts-fsrs](https://github.com/open-spaced-repetition/ts-fsrs)
 
 ## Getting Started
